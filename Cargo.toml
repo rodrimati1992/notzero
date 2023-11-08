@@ -1,10 +1,23 @@
 [package]
 name = "notzero"
-version = "0.1.0"
+version = "1.0.0"
+authors = ["rodrimati1992 <rodrimatt1985@gmail.com>"]
 edition = "2021"
+license = "Zlib"
+description = "macro for constructing `std::num::NonZero*` from constants"
+documentation = "https://docs.rs/notzero/"
+readme = "./README.md"
+keywords = []
+categories = ["no-std"]
+repository = "https://github.com/rodrimati1992/notzero/"
+include = [
+    "Cargo.toml", 
+    "src/**/*.rs", 
+    "./README.md",
+    "LICENSE-ZLIB.md", 
+]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies.typewit]
-version = "1.5"
+version = "1.8"
 default-features = false
