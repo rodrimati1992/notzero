@@ -1,10 +1,6 @@
 name: Rust
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: [push, pull_request]
 
 env:
   CARGO_TERM_COLOR: always
@@ -21,7 +17,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build
-      run: cargo build --verbose
-    - name: Run tests
-      run: cargo test --verbose
+    - name: stuff
+      run: |
+        set -ex
+        rustup override set ${{ matrix.rust }}
+        cargo build --verbose
+        cargo test --verbose
