@@ -57,6 +57,7 @@
 //! [`inline_const`]: https://github.com/rust-lang/rust/issues/76001
 //! [`nz`]: crate::nz
 #![no_std]
+#![cfg_attr(test, feature(inline_const))]
 
 #![deny(unused_results)]
 #![deny(clippy::missing_safety_doc)]
@@ -66,6 +67,8 @@
 
 use typewit::TypeEq;
 
+#[cfg(test)]
+mod tests;
 
 
 /// Constructs a `std::num::NonZero*` from an integer constant.
@@ -125,8 +128,28 @@ macro_rules! nz {
 }
 
 
+macro_rules! call_back_with_integer_types {
+    ($callback:ident) => {
+        $callback!{
+            (   NonZeroI8,    i8)
+            (  NonZeroI16,   i16)
+            (  NonZeroI32,   i32)
+            (  NonZeroI64,   i64)
+            ( NonZeroI128,  i128)
+            (NonZeroIsize, isize)
+            (   NonZeroU8,    u8)
+            (  NonZeroU16,   u16)
+            (  NonZeroU32,   u32)
+            (  NonZeroU64,   u64)
+            ( NonZeroU128,  u128)
+            (NonZeroUsize, usize)
+        }
+    }
+}
 
-macro_rules! declare_nonzero_new_unwrap {
+
+
+macro_rules! declare_withness_stuff {
     ( $(($nz_ty:ident, $int_ty:ident))* ) => {
         use core::num::{$($nz_ty),*};
 
@@ -172,14 +195,22 @@ macro_rules! declare_nonzero_new_unwrap {
                 type Zeroable = $int_ty;
             }
         )*
+    };
+}
 
-        #[doc(hidden)]
-        #[track_caller]
-        pub const fn __nonzero_new_unwrap<I, NZ>(n: I) -> NZ
-        where
-            I: __Integer<NonZero = NZ>,
-            NZ: __NonZeroInt<Zeroable = I>
-        {
+call_back_with_integer_types!{ declare_withness_stuff }
+
+
+
+#[doc(hidden)]
+#[track_caller]
+pub const fn __nonzero_new_unwrap<I, NZ>(n: I) -> NZ
+where
+    I: __Integer<NonZero = NZ>,
+    NZ: __NonZeroInt<Zeroable = I>
+{
+    macro_rules! __inner {
+        ( $(($nz_ty:ident, $int_ty:ident))* ) => {
             match I::__WITNESS {
                 $(
                     __IntegerWit::$int_ty(te) => {
@@ -191,21 +222,7 @@ macro_rules! declare_nonzero_new_unwrap {
                 )*
             }
         }
-    };
-}
+    }
 
-declare_nonzero_new_unwrap! {
-    (   NonZeroI8,    i8)
-    (  NonZeroI16,   i16)
-    (  NonZeroI32,   i32)
-    (  NonZeroI64,   i64)
-    ( NonZeroI128,  i128)
-    (NonZeroIsize, isize)
-    (   NonZeroU8,    u8)
-    (  NonZeroU16,   u16)
-    (  NonZeroU32,   u32)
-    (  NonZeroU64,   u64)
-    ( NonZeroU128,  u128)
-    (NonZeroUsize, usize)
+    call_back_with_integer_types!{__inner}
 }
-
