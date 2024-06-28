@@ -1,21 +1,21 @@
 error[E0277]: the trait bound `bool: __Integer` is not satisfied
- --> src/ui_tests/pass_nonint_arg-err.rs:4:26
+ --> src/ui_tests/pass_nonint_arg-err.rs:2:26
   |
-4 |     let _ = notzero::nz!(false);
+2 |     let _ = notzero::nz!(false);
   |             -------------^^^^^-
   |             |            |
   |             |            the trait `__Integer` is not implemented for `bool`
   |             required by a bound introduced by this call
   |
   = help: the following other types implement trait `__Integer`:
-            isize
-            i8
+            i128
             i16
             i32
             i64
-            i128
-            usize
-            u8
+            i8
+            isize
+            u128
+            u16
           and $N others
 note: required by a bound in `__nonzero_new_unwrap`
  --> src/lib.rs
