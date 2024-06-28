@@ -1,13 +1,16 @@
 //! Provides the [`nz`] macro for constructing a 
 //! `std::num::NonZero*` from an integer constant.
 //! 
+//! The [`nz`] macro can infer the argument's type from 
+//! the inferred `NonZero*` return type,
+//! while some alternative macros always require that 
+//! the argument's type is specified.
+//! 
 //! # Example
 //! 
 //! ### Usage
 //! 
 //! ```rust
-//! #![feature(inline_const)]
-//! 
 //! use notzero::nz;
 //! use std::num::NonZeroU64;
 //! 
@@ -26,8 +29,6 @@
 //! ### Zero argument
 //! 
 //! ```compile_fail
-//! #![feature(inline_const)]
-//! 
 //! const ZERO: u8 = 0;
 //! let _ = notzero::nz!(ZERO);
 //! ```
@@ -48,16 +49,11 @@
 //! 
 //! # Minimum Supported Rust Version
 //! 
-//! This crate currently requires users to enable the [`inline_const`] unstable feature,
-//! which means that it requires the nightly compiler.
+//! This crate requires Rust 1.79.0 because it uses `const { ... }` expressions
+//! (also known as "inline const").
 //! 
-//! This crate will support stable Rust once [`inline_const`] stabilizes,
-//! requiring only the Rust version where the feature is stabilized.
-//! 
-//! [`inline_const`]: https://github.com/rust-lang/rust/issues/76001
 //! [`nz`]: crate::nz
 #![no_std]
-#![cfg_attr(test, feature(inline_const))]
 
 #![deny(unused_results)]
 #![deny(clippy::missing_safety_doc)]
@@ -90,8 +86,6 @@ mod tests;
 /// ### Usage
 /// 
 /// ```rust
-/// #![feature(inline_const)]
-/// 
 /// use notzero::nz;
 /// use std::num::NonZeroU64;
 /// 
@@ -106,8 +100,6 @@ mod tests;
 /// ### Zero argument
 /// 
 /// ```compile_fail
-/// #![feature(inline_const)]
-/// 
 /// let _ = notzero::nz!(0);
 /// ```
 /// the above code produces this compile-time error:

@@ -98,6 +98,7 @@ fn constructor_usize() {
     constructor_test_case!{NonZeroUsize usize}
 }
 
+#[cfg(feature = "__ui_tests")]
 #[test]
 fn ui() {
     let t = trybuild::TestCases::new();

@@ -1,7 +1,8 @@
 [package]
 name = "notzero"
-version = "1.0.1"
+version = "1.1.0"
 authors = ["rodrimati1992 <rodrimatt1985@gmail.com>"]
+rust-version = "1.79.0"
 edition = "2021"
 license = "Zlib"
 description = "macro for constructing `std::num::NonZero*` from constants"
@@ -17,6 +18,9 @@ include = [
     "LICENSE-ZLIB.md", 
 ]
 
+
+[features]
+__ui_tests = []
 
 [dependencies.typewit]
 version = "1.8"

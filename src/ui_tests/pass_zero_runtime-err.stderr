@@ -1,15 +1,15 @@
 error[E0080]: evaluation of `main::{constant#0}` failed
- --> src/ui_tests/pass_zero_runtime-err.rs:4:13
+ --> src/ui_tests/pass_zero_runtime-err.rs:2:13
   |
-4 |     let _ = notzero::nz!(0u16);
-  |             ^^^^^^^^^^^^^^^^^^ the evaluated program panicked at 'passed in a `0` argument', $DIR/src/ui_tests/pass_zero_runtime-err.rs:4:13
+2 |     let _ = notzero::nz!(0u16);
+  |             ^^^^^^^^^^^^^^^^^^ the evaluated program panicked at 'passed in a `0` argument', $DIR/src/ui_tests/pass_zero_runtime-err.rs:2:13
   |
   = note: this error originates in the macro `notzero::nz` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 note: erroneous constant encountered
- --> src/ui_tests/pass_zero_runtime-err.rs:4:13
+ --> src/ui_tests/pass_zero_runtime-err.rs:2:13
   |
-4 |     let _ = notzero::nz!(0u16);
+2 |     let _ = notzero::nz!(0u16);
   |             ^^^^^^^^^^^^^^^^^^
   |
   = note: this note originates in the macro `notzero::nz` (in Nightly builds, run with -Z macro-backtrace for more info)
