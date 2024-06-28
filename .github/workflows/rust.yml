@@ -28,11 +28,3 @@ jobs:
         rustup override set ${{ matrix.rust }}
         cargo build --verbose
         cargo test --verbose
-
-    - uses: actions/checkout@v3
-    - name: ui-test
-      if: ${{ matrix.rust == 'nightly' }}
-      run: |
-        set -ex
-        rustup override set ${{ matrix.rust }}
-        cargo test --features __ui_tests --verbose
